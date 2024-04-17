@@ -1,10 +1,13 @@
 package edu.jsu.mcis.cs408.crosswordmagic.view;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.text.InputType;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -12,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,6 +26,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.databinding.ActivityMainBinding;
 
@@ -281,6 +286,7 @@ public class CrosswordGridView extends View implements AbstractView {
     private class OnTouchHandler implements OnTouchListener {
 
         private Context context;
+        String userInput;
 
         public OnTouchHandler(Context context) {
             this.context = context;
@@ -301,7 +307,26 @@ public class CrosswordGridView extends View implements AbstractView {
 
                 if (n != 0) {
                     String text = String.format(Locale.getDefault(),"X: %d, Y: %d, Box: %d", x, y, n);
-                    Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(R.string.dialog_title);
+                    builder.setMessage(R.string.dialog_message);
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    builder.setView(input);
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int i) {
+                            userInput = input.getText().toString();
+                        }
+                    });
+                    builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface d, int i) {
+                            userInput = "";
+                            d.cancel();
+                        }
+                    });
+                    AlertDialog aboutDialog = builder.show();
                 }
 
             }
