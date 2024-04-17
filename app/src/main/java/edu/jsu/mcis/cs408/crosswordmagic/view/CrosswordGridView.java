@@ -29,6 +29,7 @@ import java.util.Map;
 import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.databinding.ActivityMainBinding;
+import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
 
 public class CrosswordGridView extends View implements AbstractView {
 
@@ -317,6 +318,8 @@ public class CrosswordGridView extends View implements AbstractView {
                         @Override
                         public void onClick(DialogInterface d, int i) {
                             userInput = input.getText().toString();
+                            controller.setUserInput(userInput);
+                            controller.setBoxSelection(n);
                         }
                     });
                     builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
