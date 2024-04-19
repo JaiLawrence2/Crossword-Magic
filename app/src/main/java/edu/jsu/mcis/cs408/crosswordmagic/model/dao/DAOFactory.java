@@ -71,6 +71,9 @@ public class DAOFactory extends SQLiteOpenHelper {
     public WordDAO getWordDAO() {
         return new WordDAO(this);
     }
+    public GuessDAO getGuessDAO() {
+        return new GuessDAO(this);
+    }
 
     public String getProperty(String key) {
         return (properties.getProperty(key));

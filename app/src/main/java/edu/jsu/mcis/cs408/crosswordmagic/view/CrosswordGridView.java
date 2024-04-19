@@ -281,6 +281,19 @@ public class CrosswordGridView extends View implements AbstractView {
             }
 
         }
+        if (name.equals(CrosswordMagicController.GUESS_PROPERTY)) {
+
+            if (value instanceof Integer) {
+
+                Integer id = (Integer) value;
+                String message = getContext().getString(id);
+
+                Toast toast = Toast.makeText(getContext(), message, Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            // create toast; display "message"
+
+        }
 
     }
 
@@ -318,8 +331,12 @@ public class CrosswordGridView extends View implements AbstractView {
                         @Override
                         public void onClick(DialogInterface d, int i) {
                             userInput = input.getText().toString();
+                            String result = String.valueOf(n) + " "+  (userInput).toUpperCase();
                             controller.setUserInput(userInput);
                             controller.setBoxSelection(n);
+                            controller.setGuesses(result);
+                            Log.i(CrosswordMagicController.TAG, "result: "+ result);
+                            controller.getSolved();
                         }
                     });
                     builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {

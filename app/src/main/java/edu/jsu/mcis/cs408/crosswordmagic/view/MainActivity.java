@@ -33,7 +33,14 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
 
         controller = new CrosswordMagicController();
 
-        CrosswordMagicModel model = new CrosswordMagicModel(this);
+        Integer puzzleid = 0;
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            puzzleid = extras.getInt("puzzleid");
+        }
+
+        CrosswordMagicModel model = new CrosswordMagicModel(this,puzzleid);
 
         /* Register View(s) and Model(s) with Controller */
 
@@ -43,6 +50,9 @@ public class MainActivity extends AppCompatActivity implements AbstractView {
         /* Get Test Property (tests MVC framework) */
 
         controller.getTestProperty(CrosswordMagicController.TEST_PROPERTY);
+
+
+
 
     }
 

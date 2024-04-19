@@ -5,7 +5,9 @@
     <string name= "tab_title_puzzle">Puzzle</string>
     <string name= "tab_title_clues">Clues</string>
     <string name="dialog_title">Welcome User!</string>
-    <string name="dialog_message">Enter your guess!</string>
-    <string name="congratulations">Congratulations!! You guessed the word correctly!</string>
-    <string name="incorrect_answer">Not quite. Please try again</string>
+    <string name="dialog_message">Tap a box to enter your guess!</string>
+    <string name="guess_correct">Congratulations!  Your guess was correct!</string>
+    <string name="guess_incorrect">Sorry, your guess was incorrect.  Please try again.</string>
+    <string name="crossword_magic_cover">Crossword Magic Cover</string>
+    <string name="button_play">Play Puzzle</string>
 </resources>

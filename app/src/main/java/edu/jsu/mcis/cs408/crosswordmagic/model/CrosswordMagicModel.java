@@ -5,8 +5,10 @@ import android.util.Log;
 
 import java.util.Arrays;
 
+import edu.jsu.mcis.cs408.crosswordmagic.R;
 import edu.jsu.mcis.cs408.crosswordmagic.controller.CrosswordMagicController;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.DAOFactory;
+import edu.jsu.mcis.cs408.crosswordmagic.model.dao.GuessDAO;
 import edu.jsu.mcis.cs408.crosswordmagic.model.dao.PuzzleDAO;
 
 public class CrosswordMagicModel extends AbstractModel {
@@ -17,13 +19,23 @@ public class CrosswordMagicModel extends AbstractModel {
     private Puzzle puzzle;
     private String guess;
     private int box_selected;
+    private DAOFactory daoFactory;
+    private PuzzleListItem puzzlelist;
 
     public CrosswordMagicModel(Context context) {
 
-        DAOFactory daoFactory = new DAOFactory(context);
+        this.daoFactory = new DAOFactory(context);
         PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
 
         this.puzzle = puzzleDAO.find(DEFAULT_PUZZLE_ID);
+
+    }
+    public CrosswordMagicModel(Context context, int puzzleid) {
+
+        this.daoFactory = new DAOFactory(context);
+        PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
+
+        this.puzzle = puzzleDAO.find(puzzleid);
 
     }
 
@@ -59,23 +71,57 @@ public class CrosswordMagicModel extends AbstractModel {
         Log.i(TAG, "Clues: "+ puzzle.getCluesDown());
         firePropertyChange(CrosswordMagicController.CLUES_DOWN_PROPERTY, null, puzzle.getCluesDown());
     }
-    public void getGuesses(Integer num, String guess){
-         firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, puzzle.checkGuess(num, guess) );
+    public void setGuesses(String guess){
+        Log.i(TAG, "guess: "+ this.guess);
+        String[] params = guess.split(" ");
+        box_selected = Integer.parseInt(params[0]);
+        guess = params[1];
+        Log.i(TAG, "bo: "+ box_selected);
+        Log.i(TAG, "guess: "+ guess);
+
+        WordDirection result = puzzle.checkGuess(box_selected, guess);
+
+        if (result != null){
+
+            String key = box_selected + result.toString();
+            Word word = puzzle.getWord(key);
+            int wordid = word.getId();
+            int puzzleid = word.getPuzzleid();
+
+            GuessDAO puzzleDao = daoFactory.getGuessDAO();
+            puzzleDao.create(puzzleid, wordid);
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, R.string.guess_correct);
+
+        }
+        else {
+            firePropertyChange(CrosswordMagicController.GUESS_PROPERTY, null, R.string.guess_incorrect);
+        }
     }
     public void getSolved(){
+        /*String oldValue = this.guess;
+        String guess
+        this.guess = guess;*/
+        Log.i(TAG, "Solved: " + puzzle.isSolved());
         firePropertyChange(CrosswordMagicController.SOLVED_PROPERTY, null, puzzle.isSolved());
     }
-    public void getSelectedBox(int box_selected){
+    public void setSelectedBox(Integer box_selected){
         int oldValue = this.box_selected;
         this.box_selected = box_selected;
+        Log.i(TAG, "Selected Box: " + box_selected);
         firePropertyChange(CrosswordMagicController.SELECTED_BOX_PROPERTY, oldValue, box_selected);
 
     }
-    public void getUserInput(String guess){
+    public void setUserInput(String guess){
         String oldValue = this.guess;
         this.guess = guess;
+        Log.i(TAG, "Guess: "+ guess);
         firePropertyChange(CrosswordMagicController.USER_INPUT_PROPERTY, oldValue, guess);
 
+    }
+    public void getPuzzleList(){
+        PuzzleDAO puzzleDAO = daoFactory.getPuzzleDAO();
+        PuzzleListItem[] puzzleListItems = puzzleDAO.list();
+        firePropertyChange(CrosswordMagicController.PUZZLE_LIST_PROPERTY, null, puzzleListItems);
     }
 
 }

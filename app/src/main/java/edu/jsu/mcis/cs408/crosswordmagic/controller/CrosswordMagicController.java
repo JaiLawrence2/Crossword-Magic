@@ -4,6 +4,7 @@ import edu.jsu.mcis.cs408.crosswordmagic.model.CrosswordMagicModel;
 import edu.jsu.mcis.cs408.crosswordmagic.view.MainActivity;
 
 public class CrosswordMagicController extends AbstractController {
+    public static final String TAG = "Controller";
 
     public static final String TEST_PROPERTY = "TestProperty";
     public static final String GRID_LETTERS_PROPERTY = "GridLetters";
@@ -16,6 +17,7 @@ public class CrosswordMagicController extends AbstractController {
     public static final String CLUES_DOWN_PROPERTY = "CluesDown";
     public static final String SELECTED_BOX_PROPERTY = "SelectedBox";
     public static final String USER_INPUT_PROPERTY = "UserInput";
+    public static final String PUZZLE_LIST_PROPERTY = "PuzzleList";
 
     public void getTestProperty(String value) {
         getModelProperty(TEST_PROPERTY);
@@ -36,10 +38,13 @@ public class CrosswordMagicController extends AbstractController {
     public void getCluesAcross() { getModelProperty(CLUES_ACROSS_PROPERTY); }
 
     public void getCluesDown() { getModelProperty(CLUES_DOWN_PROPERTY); }
-    public void getGuesses(Integer num, String guess){getModelProperty(GUESS_PROPERTY);}
+    public void setGuesses(String guess){setModelProperty(GUESS_PROPERTY, guess);}
     public void getSolved(){getModelProperty(SOLVED_PROPERTY);}
-    public void setUserInput(String userInput) {getModelProperty(USER_INPUT_PROPERTY);}
+    public void setUserInput(String userInput) {setModelProperty(USER_INPUT_PROPERTY, userInput);}
 
-    public void setBoxSelection(int n) { getModelProperty(SELECTED_BOX_PROPERTY);
+    public void setBoxSelection(int n) { setModelProperty(SELECTED_BOX_PROPERTY, n);
+    }
+    public void getPuzzleList() {
+        getModelProperty(PUZZLE_LIST_PROPERTY);
     }
 }
