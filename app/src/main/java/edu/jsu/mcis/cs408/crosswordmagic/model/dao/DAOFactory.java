@@ -126,11 +126,6 @@ public class DAOFactory extends SQLiteOpenHelper {
                         params.put(properties.getProperty("sql_field_direction"), fields[3]);
                         params.put(properties.getProperty("sql_field_word"), fields[4]);
                         params.put(properties.getProperty("sql_field_clue"), fields[5]);
-                        /*
-
-                        INSERT YOUR CODE HERE
-
-                         */
 
                         wordDAO.create(db, params);
 

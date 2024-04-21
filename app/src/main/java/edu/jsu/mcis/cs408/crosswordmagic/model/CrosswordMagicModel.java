@@ -20,7 +20,6 @@ public class CrosswordMagicModel extends AbstractModel {
     private String guess;
     private int box_selected;
     private DAOFactory daoFactory;
-    private PuzzleListItem puzzlelist;
 
     public CrosswordMagicModel(Context context) {
 
@@ -68,16 +67,12 @@ public class CrosswordMagicModel extends AbstractModel {
     }
 
     public void getCluesDown() {
-        Log.i(TAG, "Clues: "+ puzzle.getCluesDown());
         firePropertyChange(CrosswordMagicController.CLUES_DOWN_PROPERTY, null, puzzle.getCluesDown());
     }
     public void setGuesses(String guess){
-        Log.i(TAG, "guess: "+ this.guess);
         String[] params = guess.split(" ");
         box_selected = Integer.parseInt(params[0]);
         guess = params[1];
-        Log.i(TAG, "bo: "+ box_selected);
-        Log.i(TAG, "guess: "+ guess);
 
         WordDirection result = puzzle.checkGuess(box_selected, guess);
 
@@ -98,23 +93,17 @@ public class CrosswordMagicModel extends AbstractModel {
         }
     }
     public void getSolved(){
-        /*String oldValue = this.guess;
-        String guess
-        this.guess = guess;*/
-        Log.i(TAG, "Solved: " + puzzle.isSolved());
         firePropertyChange(CrosswordMagicController.SOLVED_PROPERTY, null, puzzle.isSolved());
     }
     public void setSelectedBox(Integer box_selected){
         int oldValue = this.box_selected;
         this.box_selected = box_selected;
-        Log.i(TAG, "Selected Box: " + box_selected);
         firePropertyChange(CrosswordMagicController.SELECTED_BOX_PROPERTY, oldValue, box_selected);
 
     }
     public void setUserInput(String guess){
         String oldValue = this.guess;
         this.guess = guess;
-        Log.i(TAG, "Guess: "+ guess);
         firePropertyChange(CrosswordMagicController.USER_INPUT_PROPERTY, oldValue, guess);
 
     }

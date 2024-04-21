@@ -50,10 +50,7 @@ public class WordDAO {
         values.put(word, params.get(word));
         values.put(clue, params.get(clue));
 
-
         int key = (int)db.insert(daoFactory.getProperty("sql_table_words"), null, values);
-
-        Log.i(TAG, "key" + key);
 
         return key;
 

@@ -51,6 +51,7 @@ public class WelcomeActivity extends AppCompatActivity implements AbstractView, 
 
         controller.getPuzzleList();
 
+
     }
 
     @Override

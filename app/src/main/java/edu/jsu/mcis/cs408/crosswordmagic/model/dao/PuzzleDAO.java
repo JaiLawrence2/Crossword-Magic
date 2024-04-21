@@ -96,19 +96,8 @@ public class PuzzleDAO {
             params.put("height", cursor.getString(3));
             params.put("width", cursor.getString(4));
 
-            Log.i(TAG, "id: " + cursor.getString(0));
-            Log.i(TAG, "name : " + cursor.getString(1));
-            Log.i(TAG, "description: " + cursor.getString(2));
-            Log.i(TAG, "height: " + cursor.getString(3));
-            Log.i(TAG, "width: " + cursor.getString(4));
-
             /* get data for new puzzle */
 
-            /*
-
-            INSERT YOUR CODE HERE
-
-            */
             if (!params.isEmpty())
                 puzzle = new Puzzle(params);
 
@@ -136,20 +125,7 @@ public class PuzzleDAO {
                     params.put("word", cursor.getString(6));
                     params.put("clue", cursor.getString(7));
 
-                    Log.i(TAG, "row: "+ cursor.getString(2));
-                    Log.i(TAG, "column : "+ cursor.getString(3));
-                    Log.i(TAG, "box: "+ cursor.getString(4));
-                    Log.i(TAG, "direction: "+ cursor.getString(5));
-                    Log.i(TAG, "word: "+ cursor.getString(6));
-                    Log.i(TAG, "clue: "+ cursor.getString(7));
-
                     /* get data for the next word in the puzzle */
-
-                    /*
-
-                    INSERT YOUR CODE HERE
-
-                    */
 
                     if (!params.isEmpty())
                         puzzle.addWordToPuzzle(new Word(params));
